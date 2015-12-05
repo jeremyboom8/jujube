@@ -21,9 +21,8 @@ Flight::route('GET /card/@id', function($id) use ($myJujube) {
 	$myJujube->getCard($id);
 });
 
-Flight::route('GET /card/(@location(/@caetgory))', function($location) use ($myJujube) {
-	var_dump($location);
-	// $myJujube->getCard($id);
+Flight::route('GET /card/(@location(/@category))', function($location, $category) use ($myJujube) {
+	$myJujube->getRandomCard($location, $category);
 });
 
 

@@ -2,9 +2,9 @@ window.jujube = window.jujube || {};
 
 
 jujube.settings = {
-    location: 'default',
-    category: 'all',
-    base_url: 'http://localhost/'
+    location: '1',
+    category: '1',
+    baseUrl: 'http://localhost/'
 };
 
 jujube.setLocation = function setLocation() {};
@@ -20,7 +20,7 @@ jujube.init = function init() {
 
 jujube.getRandomCard = function getRandomCard() {
     $.ajax({
-        url: this.settings.base_url + 'card/' + this.settings.location + '/' + this.settings.category,
+        url: this.settings.baseUrl + 'card/' + this.settings.location + '/' + this.settings.category,
         success: function getRandomCardSuccess(response) {window.console.log('Response:', response);}
     });
 };

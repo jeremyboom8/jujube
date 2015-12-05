@@ -13,11 +13,22 @@ class CardModel extends DBModel {
      * @details [long description]
      * @return array
      */
-    public function getRandom() {
-        $sql = 'SELECT * FROM card ORDER BY RAND() LIMIT 1';
+    public function getRandom($location = NULL, $category = NULL) {
+        $params = array();
+        $sql = 'SELECT * FROM card WHERE 1=1';
+        if ($location !== NULL) {
+            $sql .= ' AND country_id = :location';
+            $params['location'] = $location;
+        }
+        if ($category !== NULL) {
+            $sql .= ' AND category_id = :category';
+            $params['category'] = $category;
+        }
+        $sql .= ' ORDER BY RAND() LIMIT 1';
+
 
         $stmt = $this->_db->prepare($sql);
-        $stmt->execute();
+        $stmt->execute($params);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$row) {
             $row = array();

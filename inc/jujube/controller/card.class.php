@@ -13,8 +13,8 @@ class Jujube {
         echo $janswer;
     }
 
-    public function getRandomCard(){
-        $card = $this->_db->getRandom();
+    public function getRandomCard($location = NULL, $category = NULL){
+        $card = $this->_db->getRandom($location, $category);
         $this->answerRequest($card);
     }
 
