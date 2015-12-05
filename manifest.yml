@@ -1,0 +1,11 @@
+applications:
+- path: .
+  memory: 128M
+  instances: 1
+  domain: mybluemix.net
+  name: jujube
+  host: jujube
+  disk_quota: 1024M
+  services:
+  - ClearDB
+  buildpack: php_buildpack
