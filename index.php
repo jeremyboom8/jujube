@@ -1,23 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>PHP Starter Application</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" href="style.css" />
-</head>
-<body>
-	<table>
-		<tr>
-			<td style='width: 30%;'><img class = 'newappIcon' src='images/newapp-icon.png'>
-			</td>
-			<td>
-				<h1 id = "message"><?php echo "Hello world!"; ?>
-</h1>
-				<p class='description'></p> Thanks for creating a <span class="blue">PHP Starter Application</span>. Get started by reading our <a
-				href="https://www.ng.bluemix.net/docs/#starters/php/index.html#php">documentation</a>
-				or use the Start Coding guide under your app in your dashboard.
-			</td>
-		</tr>
-	</table>
-</body>
-</html>
+<?php
+require_once 'inc/flight/Flight.php';
+require_once 'inc/jujube/controller/card.class.php';
+
+$myJujube = new Jujube();
+
+Flight::route('/', function(){
+    echo file_get_contents('sindex.html');
+});
+
+Flight::route('GET /card', function() use ($myJujube) {
+	$myJujube->getRandomCard();
+});
+
+Flight::route('GET /card/@id', function($id) use ($myJujube) {
+	$myJujube->getCard($id);
+});
+
+Flight::map('notFound', function(){
+    // Handle error
+    $request = Flight::request();
+    print_r($request);
+});
+
+
+
+Flight::start();
+
+
+?>
