@@ -1,7 +1,11 @@
 <?php
 
+
 require_once 'inc/flight/Flight.php';
 require_once 'inc/jujube/controller/card.class.php';
+
+
+
 
 $myJujube = new Jujube();
 
@@ -16,6 +20,13 @@ Flight::route('GET /card', function() use ($myJujube) {
 Flight::route('GET /card/@id', function($id) use ($myJujube) {
 	$myJujube->getCard($id);
 });
+
+Flight::route('GET /card/(@location(/@caetgory))', function($location) use ($myJujube) {
+	var_dump($location);
+	// $myJujube->getCard($id);
+});
+
+
 
 Flight::map('notFound', function(){
     // Handle error
