@@ -1,5 +1,4 @@
 <?php
-die('testing');
 
 require_once 'inc/flight/Flight.php';
 require_once 'inc/jujube/controller/card.class.php';
