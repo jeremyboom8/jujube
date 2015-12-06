@@ -209,25 +209,15 @@ float: left;
 
 
 .hearts{
+position: absolute;
+z-index: 2;
+margin: 1em;
+margin-left: 80%;
+height: 4em;
+width: 4em;
+border-radius: 4em;
 
-	position: absolute;
-
-	z-index: 2;
-
-	margin: 1em;
-
-	margin-left: 80%;
-
-	height: 4em;
-
-	width: 4em;
-
-	border-radius: 4em;
-
-	background: black;
-
-	opacity: 0.5;
-
+opacity: 0.5;
 }
 
 
