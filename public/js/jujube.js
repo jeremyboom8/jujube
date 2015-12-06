@@ -147,24 +147,36 @@ jujube.showSimilarCards = function showSimilarCards(response) {
  * @return [description]
  */
 jujube.showView = function showView(e, which) {
+    window.console.log('showView(e, ' + which + ')');
     if (typeof e !== 'undefined') {
         e.preventDefault();
     }
-    var self = this;
+    var self = this,
+        isQuestionVisible = $('#question').is(':visible'),
+        isInfoCardVisible = $('#infoCard').is(':visible'),
+        isSettingsVisible = $('#settings').is(':visible');
+    window.console.log('showView(' + which + ') -> ', isQuestionVisible, isInfoCardVisible, isSettingsVisible);
+
     if (which == 'swap') {
-        if ($('#question').is(':visible')) {
+        if (isInfoCardVisible || isSettingsVisible) {
             $.ajax({
                 url:        this.settings.baseUrl + 'card/' + this.settings.location + '/' + this.settings.category,
                 success:    function showQuestion(response) { self.showQuestion.call(self, response); }
             });
-            return this.showView(e, 'question');
+            $('.view').hide('slow', function onCompleteHideViews() {
+                $('#question').show();
+            });
         } else {
-            return this.showView(e, 'infoCard');
+            $('.view').hide('slow', function onCompleteHideViews() {
+                $('#infoCard').show();
+            });
         }
+    } else {
+        $('.view').hide('slow', function onCompleteHideViews() {
+            $('#' + which).show();
+        });
     }
-    $('.view').hide('slow', function onCompleteHideViews() {
-        $('#' + which).show('slow');
-    });
+
 };
 
 jujube.showQuestion = function showQuestion(response) {
