@@ -57,12 +57,12 @@ float: left;
 	clear: both;
 }
 
-#middle{
+.middle{
 	width: 100%;
 	min-height: 80%;
 }
 
-#bottom{
+.bottom{
 	margin-top: 1em;
 }
 
