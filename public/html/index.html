@@ -13,6 +13,7 @@
 	    <!-- Custom CSS -->
 	    <link href="public/css/reset.css" rel="stylesheet">
 	    <link href="public/css/style.css" rel="stylesheet">
+	    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
 	</head>
 
 	<body>
@@ -28,7 +29,7 @@
 		</nav>
 
 		<div id="infoCard" class="view">
-			<div id="middle">
+			<div class="middle">
 				<div class="hearts"></div>
 				<img class="banner" src="public/img/bg_img.jpg" alt="" />
 				<div id="text">
@@ -39,7 +40,7 @@
 				</div>
 			</div>
 
-			<div id="bottom">
+			<div class="bottom">
 				<div class="selector">
 					<div class="selector_pic"></div>
 					<div class="selector_title">Heroine of the day</div>
@@ -62,9 +63,37 @@
 
 		<div id="settings" class="view">
 			These are the settings
+			<div class="middle">
+				<img class="banner" src="http://www.merrylandpark.com/images-products/KB3-305-2.jpg" alt="">
+			</div>
+
+			<div class="bottom">
+				<div><h3>Categories</h3></div>
+				<div class="selector">
+					<div class="selector_pic"></div>
+					<div class="selector_title">Category 1</div>
+				</div>
+				<div class="selector">
+					<div class="selector_pic"></div>
+					<div class="selector_title">Category 2</div>
+				</div>
+				<div class="selector">
+					<div class="selector_pic"></div>
+					<div class="selector_title">Category 3</div>
+				</div>
+				<div class="selector">
+					<div class="selector_pic"></div>
+					<div class="selector_title">Category 4</div>
+				</div>
+			</div>
 		</div>
 
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).on("mobileinit", function(){
+		      $.mobile.loadingMessage = false;
+		    });
+		</script>
 		<script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 	    <script type="text/javascript" src="public/js/jujube.js"></script>
 
