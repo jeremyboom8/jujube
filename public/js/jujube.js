@@ -204,6 +204,14 @@ jujube.showPossibleAnswers = function showPossibleAnswers(response) {
 
 };
 
+jujube.showWrongAnswer = function showWrongAnswer() {
+    alert('Ooooopppsss....');
+};
+
+jujube.showRightAnswer = function showRightAnswer() {
+    alert('Goodie!');
+};
+
 (function initializer() {
     'use strict';
     $('.ui-loader').hide();
