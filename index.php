@@ -3,16 +3,18 @@
 
 require_once 'inc/flight/Flight.php';
 require_once 'inc/jujube/controller/card.class.php';
-
-
-
+require_once 'inc/jujube/lib/template.class.php';
 
 $myJujube = new Jujube();
 
-Flight::route('/', function(){
-    echo file_get_contents('sindex.html');
+Flight::route('/', function() {
+	$tpl = new Template();
+	$tpl->load('index.html');
+	$tpl->render();
 });
 
+
+/*************** API **************/
 Flight::route('GET /card', function() use ($myJujube) {
 	$myJujube->getRandomCard();
 });
