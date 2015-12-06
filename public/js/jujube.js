@@ -21,9 +21,19 @@ jujube.init = function init() {
 jujube.getRandomCard = function getRandomCard() {
     $.ajax({
         url: this.settings.baseUrl + 'card/' + this.settings.location + '/' + this.settings.category,
-        success: function getRandomCardSuccess(response) {window.console.log('Response:', response);}
+        success: this.showCardInfo
     });
 };
+
+jujube.showCardInfo = function showCardInfo(response) {
+    window.console.log('showCardInfo:', response);
+    var card = $('#wrapper');
+    card.find('.banner').attr('src', response['img_url']);
+    card.find('#title, .person_name').html(response.title);
+    card.find('.copy').html(response.text);
+
+};
+
 
 (function initializer() {
     'use strict';
