@@ -1,0 +1,133 @@
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+nav{
+position: relative;
+margin-bottom: 20px;
+border: 1px solid transparent;
+}
+
+.navbar{
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 8em;
+	background-color: green;
+}
+
+.nav-icon-left{
+float: left;
+	height: 5em;
+	width: 5em;
+	margin: 1.5em;
+	background: white;
+	display: inline-block;
+}
+
+.nav-icon-right{
+	float: right;
+	height: 5em;
+	width: 5em;
+	margin: 1.5em;
+	background: white;
+	display: inline-block;
+}
+
+#swap{
+	height: 8em;
+	width: 8em;
+	background: blue;
+	position: absolute;
+	left: 50%;
+	margin-left: -4em;
+	top: 2.5em;
+	border-radius:8em;
+	font-size:20px;
+	color:#fff;
+	line-height:100px;
+	text-align:center;
+	z-index: 1;
+}
+
+#wrapper{
+	margin: 2em;
+	height: 60%;
+	clear: both;
+}
+
+#middle{
+	width: 100%;
+	min-height: 80%;
+}
+
+#bottom{
+	margin-top: 1em;
+}
+
+.selector{
+	width: 49.5%;
+	min-height: 8em;
+	display: inline-block;
+	background: purple;
+}
+
+.selector_pic{
+	float: left;
+	height: 5em;
+	width: 5em;
+	border-radius: 5em;
+	background: black;
+	margin: 1.5em;
+	display: inline-block;
+}
+
+.selector_title{
+	display: inline-block;
+	line-height: 1.5 em;
+	font-size: 1.2 em;
+	color: white;
+	float: left;
+	margin-top: 1.5em;
+}
+
+.banner{
+	width: 100%;
+	position: relative;
+}
+
+.hearts{
+	position: absolute;
+	z-index: 2;
+	margin: 1em;
+	margin-left: 80%;
+	height: 4em;
+	width: 4em;
+	border-radius: 4em;
+	background: black;
+	opacity: 0.5;
+}
+
+#text{
+	padding: 1em;
+	display: inline-block;
+}
+
+#more{
+	width: 10%;
+	display: inline-block;
+	border: 1px solid #333;
+}
+
+#title{
+	line-height: 2em;
+	padding-bottom: 1em;
+	font: bold 1em/1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+.copy{
+	display: inline-block;
+	width: 80%;
+	margin-left: 2em;
+}
