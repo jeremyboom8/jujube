@@ -12,7 +12,7 @@ jujube.settings = {
 };
 
 jujube.timer = {};
-
+jujube.rightAnswer; // stores the right answer, horrible design.. I know... 10mins left
 jujube.setLocation = function setLocation() {};
 jujube.setCategory = function setCategory() {
     this.showView(undefined, 'infoCard');
@@ -51,6 +51,7 @@ jujube.init = function init() {
     $('#navToSettings').bind('click touchstart', function bindClickSettings(e) { self.showView(e, 'settings'); });
     $('#navToInfoCard').bind('click touchstart', function bindClickInfo(e) { self.showView(e, 'infoCard'); });
     $('#settings .selector').bind('click touchstart', function bindClickCategories(e) { self.setCategory(e); })
+    $('#swap').bind('click touchstart', function bindClickSwap(e) { self.showView(e, 'swap'); });
 };
 
 /**
@@ -84,7 +85,6 @@ jujube.getRandomCard = function getRandomCard() {
  * @return [description]
  */
 jujube.showCardInfo = function showCardInfo(response) {
-    window.console.log('showCardInfo:', response);
     var card = $('#infoCard');
     card.find('.banner').attr('src', response.imgUrl);
     card.find('#title, .person_name').html(response.title);
@@ -124,18 +124,16 @@ jujube.checkIdle = function checkIdle() {
  */
 jujube.showSimilarCards = function showSimilarCards(response) {
     // We only have 4 spaces
-    var currentSimilar, picSelector, titleSelector;
+    var currentSimilar,
+        picSelector,
+        titleSelector;
 
     for (var i = 3; i >= 0; i--) {
-        window.console.log('showSimilarCards() -> response.length: ' + response.length);
         if (response.length > 0) {
             currentSimilar = response.pop();
-            window.console.log('showSImilarCards() -> popping', currentSimilar, response);
         }
-        window.console.log('showSimilarCards() -> displaying ' + currentSimilar.title);
-        picSelector = '#infoCard .bottom .selector_pic:eq(' + i + ')';
-        titleSelector = '#infoCard .bottom .selector_title:eq(' + i + ')';
-        window.console.log('picSelector: ' + picSelector, 'titleSelector: ' + titleSelector);
+        picSelector     = '#infoCard .bottom .selector_pic:eq(' + i + ')';
+        titleSelector   = '#infoCard .bottom .selector_title:eq(' + i + ')';
         $(picSelector).html('<img src="' + currentSimilar.imgUrl + '">');
         $(titleSelector).html(currentSimilar.title);
     };
@@ -152,10 +150,58 @@ jujube.showView = function showView(e, which) {
     if (typeof e !== 'undefined') {
         e.preventDefault();
     }
-
+    var self = this;
+    if (which == 'swap') {
+        if ($('#question').is(':visible')) {
+            $.ajax({
+                url:        this.settings.baseUrl + 'card/' + this.settings.location + '/' + this.settings.category,
+                success:    function showQuestion(response) { self.showQuestion.call(self, response); }
+            });
+            return this.showView(e, 'question');
+        } else {
+            return this.showView(e, 'infoCard');
+        }
+    }
     $('.view').hide('slow', function onCompleteHideViews() {
         $('#' + which).show('slow');
     });
+};
+
+jujube.showQuestion = function showQuestion(response) {
+    window.console.log(response);
+    var card = $('#question'),
+        self = this;
+    this.rightAnswer = response;
+    card.find('.banner').attr('src', response.imgUrl);
+    card.find('#title, .person_name').html(response.title);
+    card.find('.copy').html(response.text);
+    $.ajax({
+        url:        this.settings.baseUrl + 'card/' + response.id + '/similar',
+        success:    function showQuestionSuccess(response) { self.showPossibleAnswers.call(self, response); }
+    });
+};
+
+jujube.showPossibleAnswers = function showPossibleAnswers(response) {
+    // We only have 4 spaces
+    var currentSimilar,
+        picSelector,
+        titleSelector;
+
+    for (var i = 3; i >= 0; i--) {
+        if (response.length > 0) {
+            currentSimilar = response.pop();
+        }
+        picSelector     = '#question .bottom .selector_pic:eq(' + i + ')';
+        titleSelector   = '#question .bottom .selector_title:eq(' + i + ')';
+        $(picSelector).html('<img src="' + currentSimilar.imgUrl + '">');
+        $(titleSelector).html(currentSimilar.title);
+    };
+    // Fugly but no time
+    picSelector     = '#question .bottom .selector_pic:eq(0)';
+    titleSelector   = '#question .bottom .selector_title:eq(0)';
+    $(picSelector).html('<img src="' + this.rightAnswer.imgUrl + '">');
+    $(titleSelector).html(this.rightAnswer.title);
+
 };
 
 (function initializer() {
