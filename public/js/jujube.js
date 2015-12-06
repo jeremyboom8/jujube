@@ -4,8 +4,9 @@ window.jujube = window.jujube || {};
 jujube.settings = {
     location: '1',
     category: '1',
-    baseUrl: 'http://localhost/',
-    idleTimer: 15 // seconds
+    baseUrl: window.location.href, //'http://localhost/',
+    idleTimer: 15, // seconds
+    isDebug: true
 };
 
 jujube.timer = {};
@@ -26,6 +27,9 @@ jujube.init = function init() {
         window.console.log('-->');
         self.checkIdle.call(self);
     }, self.settings.idleTimer * 1000);
+    if (window.location.href.indexOf('mybluemix') > (-1)) {
+        this.settings.isDebug = false;
+    }
 };
 
 jujube.getRandomCard = function getRandomCard() {
