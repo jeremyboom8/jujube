@@ -71,8 +71,8 @@ jujube.updateIdle = function updateIdle() {
  */
 jujube.getRandomCard = function getRandomCard() {
     $.ajax({
-        url: this.settings.baseUrl + 'card/' + this.settings.location + '/' + this.settings.category,
-        success: this.showCardInfo
+        url:        this.settings.baseUrl + 'card/' + this.settings.location + '/' + this.settings.category,
+        success:    this.showCardInfo
     });
 };
 
@@ -86,7 +86,7 @@ jujube.getRandomCard = function getRandomCard() {
 jujube.showCardInfo = function showCardInfo(response) {
     window.console.log('showCardInfo:', response);
     var card = $('#infoCard');
-    card.find('.banner').attr('src', response['img_url']);
+    card.find('.banner').attr('src', response.imgUrl);
     card.find('#title, .person_name').html(response.title);
     card.find('.copy').html(response.text);
     jujube.getSimilarCard(response.id);
@@ -94,23 +94,65 @@ jujube.showCardInfo = function showCardInfo(response) {
 
 jujube.getSimilarCard = function getSimilarCard(id) {
     $.ajax({
-        url: this.settings.baseUrl + 'card/'
+        url:        this.settings.baseUrl + 'card/' + id + '/similar',
+        success:    this.showSimilarCards
     });
 };
 
+/**
+ * @brief Requests a new info card only if its time and user is viewing a card
+ * @details [long description]
+ * @return [description]
+ */
 jujube.checkIdle = function checkIdle() {
-    var diff = (new Date()) - this.timer.lastAction;
-    if (diff > this.settings.idleTimer && $('#infoCard').is(':visible')) {
+    var diff        = (new Date()) - this.timer.lastAction,
+        isVisible   = $('#infoCard').is(':visible'),
+        isTime      = diff > this.settings.idleTimer;
+
+    if (isTime && isVisible) {
         this.timer.lastAction = new Date();
         this.getRandomCard();
     }
 };
 
+/**
+ * @brief Updates the infoCard with the similar cards
+ * @details [long description]
+ *
+ * @param  [description]
+ * @return [description]
+ */
+jujube.showSimilarCards = function showSimilarCards(response) {
+    // We only have 4 spaces
+    var currentSimilar, picSelector, titleSelector;
+
+    for (var i = 3; i >= 0; i--) {
+        window.console.log('showSimilarCards() -> response.length: ' + response.length);
+        if (response.length > 0) {
+            currentSimilar = response.pop();
+            window.console.log('showSImilarCards() -> popping', currentSimilar, response);
+        }
+        window.console.log('showSimilarCards() -> displaying ' + currentSimilar.title);
+        picSelector = '#infoCard .bottom .selector_pic:eq(' + i + ')';
+        titleSelector = '#infoCard .bottom .selector_title:eq(' + i + ')';
+        window.console.log('picSelector: ' + picSelector, 'titleSelector: ' + titleSelector);
+        $(picSelector).html('<img src="' + currentSimilar.imgUrl + '">');
+        $(titleSelector).html(currentSimilar.title);
+    };
+};
+
+/**
+ * @brief Switches between diffeerent views
+ * @details [long description]
+ *
+ * @param h [description]
+ * @return [description]
+ */
 jujube.showView = function showView(e, which) {
     if (typeof e !== 'undefined') {
         e.preventDefault();
     }
-    window.console.log('showView(' + which + ')');
+
     $('.view').hide('slow', function onCompleteHideViews() {
         $('#' + which).show('slow');
     });

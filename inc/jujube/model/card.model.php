@@ -15,7 +15,7 @@ class CardModel extends DBModel {
      */
     public function getRandom($location = NULL, $category = NULL) {
         $params = array();
-        $sql = 'SELECT * FROM card WHERE 1=1';
+        $sql = 'SELECT *, img_url as imgUrl FROM card WHERE 1=1';
         if ($location !== NULL) {
             $sql .= ' AND country_id = :location';
             $params['location'] = $location;
@@ -44,7 +44,7 @@ class CardModel extends DBModel {
      * @return array
      */
     public function getCard($id) {
-        $sql = 'SELECT * FROM card WHERE id = :id LIMIT 1';
+        $sql = 'SELECT *, img_url as imgUrl FROM card WHERE id = :id LIMIT 1';
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array(':id' => $id));
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -52,6 +52,14 @@ class CardModel extends DBModel {
             $row = array();
         }
         return $row;
+    }
+
+    public function getSimilarCards($id) {
+        $sql = 'SELECT *, img_url as imgUrl FROM card WHERE id != :id LIMIT 4';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array(':id' => $id));
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $rows;
     }
 }
 ?>

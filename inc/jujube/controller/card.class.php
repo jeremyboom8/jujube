@@ -22,6 +22,11 @@ class Jujube {
         $card = $this->_db->getCard($id);
         $this->answerRequest($card);
     }
+
+    public function getSimilarCards($id) {
+        $cards = $this->_db->getSimilarCards($id);
+        $this->answerRequest($cards);
+    }
 }
 ?>
 

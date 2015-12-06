@@ -23,6 +23,10 @@ Flight::route('GET /card/@id', function($id) use ($myJujube) {
 	$myJujube->getCard($id);
 });
 
+Flight::route('GET /card/@id/similar', function($id) use ($myJujube) {
+	$myJujube->getSimilarCards($id);
+});
+
 Flight::route('GET /card/(@location(/@category))', function($location, $category) use ($myJujube) {
 	$myJujube->getRandomCard($location, $category);
 });
