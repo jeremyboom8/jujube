@@ -89,5 +89,6 @@ jujube.showView = function showView(e, which) {
 
 (function initializer() {
     'use strict';
+    $('.ui-loader').hide();
     jujube.init();
 })();
