@@ -23,8 +23,7 @@ float: left;
 	width: 5em;
 	margin: 1.5em;
 	background: white;
-	display: inline-block;
-}
+	display: inline-block;text-align: center;color: black;}
 
 .nav-icon-right{
 	float: right;
