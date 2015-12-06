@@ -132,6 +132,11 @@ float: left;
 	margin-left: 2em;
 }
 
+#settings{
+	display: none;
+}
+
+
 
 /**
  * Dont remove this
